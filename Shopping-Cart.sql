@@ -2,37 +2,43 @@
 
 -- Products Menu Table
 CREATE TABLE ProductsMenu (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
+    id bigserial PRIMARY KEY,
+    "name" VARCHAR(50),
     price DECIMAL(10, 2)
 );
 
 -- Users Table
 CREATE TABLE Users (
-    id INT PRIMARY KEY,
-    name VARCHAR(255)
+    id bigserial PRIMARY KEY,
+    name VARCHAR(50)
 );
 
 -- Cart Table
 CREATE TABLE Cart (
-    Product INT,
-    Qty INT
+    Product bigserial,
+    Qty integer
 );
 
 -- OrderHeader Table
 CREATE TABLE OrderHeader (
-    OrderID INT PRIMARY KEY,
-    User INT,
+    OrderID bigserial PRIMARY KEY,
+    "User" integer,
     Orderdate TIMESTAMP
 );
 
 -- OrderDetails Table
 CREATE TABLE OrderDetails (
-    OrderHeader INT,
-    ProdID INT,
-    Qty INT
+    OrderHeader bigserial,
+    ProdID integer,
+    Qty integer
 );
 
+
+SELECT * FROM ProductsMenu
+SELECT * FROM Users
+SELECT * FROM Cart
+SELECT * FROM OrderHeader
+SELECT * FROM OrderDetails
 
 --Adding Products to the Cart
 
