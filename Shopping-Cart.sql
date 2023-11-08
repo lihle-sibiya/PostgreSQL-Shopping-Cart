@@ -40,7 +40,7 @@ SELECT * FROM Cart
 SELECT * FROM OrderHeader
 SELECT * FROM OrderDetails
 
---Adding Products to the Cart
+--Adding Products to the Cart usign INSERT INTO
 
 -- Add Coke to the Cart
 INSERT INTO Cart (Product, Qty) VALUES (1, 1);
@@ -72,7 +72,7 @@ VALUES (1, 1, '2023-04-15 15:30:00');
 INSERT INTO OrderDetails (OrderHeader, ProdID, Qty)
 SELECT 1, Product, Qty FROM Cart;
 
--- Clear Cart after Checkout
+-- Clear Cart after checkout
 DELETE FROM Cart;
 
 
