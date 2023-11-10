@@ -118,7 +118,7 @@ SELECT * FROM OrderDetails;
 -- Print a Single Order
 SELECT O.orderid, U.name AS UserName, O.orderdate, PM.name AS ProductName, OD.Qty
 FROM OrderHeader AS O
-JOIN Users AS U ON O.User = U.id
+JOIN Users AS U ON O."User" = U.id
 JOIN OrderDetails AS OD ON O.orderid = OD.orderHeader
 JOIN ProductsMenu AS PM ON OD.prodid = PM.id
 WHERE O.Orderid = 1;
