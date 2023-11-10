@@ -128,10 +128,11 @@ SELECT * FROM Users
 SELECT * FROM Cart
 SELECT * FROM OrderHeader
 SELECT * FROM OrderDetails
+
 -- Print All Orders for a Day's Shopping
 SELECT O.OrderID, U.name AS UserName, O.Orderdate, PM.name AS ProductName, OD.Qty
 FROM OrderHeader AS O
-INNER JOIN Users AS U ON O.User = U.id
+INNER JOIN Users AS U ON O."User" = U.id
 INNER JOIN OrderDetails AS OD ON O.OrderID = OD.OrderHeader
 INNER JOIN ProductsMenu AS PM ON OD.ProdID = PM.id
 WHERE DATE(O.Orderdate) = '2023-04-15';
