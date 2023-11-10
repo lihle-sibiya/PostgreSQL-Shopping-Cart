@@ -102,6 +102,9 @@ SELECT * FROM OrderHeader
 INSERT INTO OrderDetails (OrderHeader, ProdID, Qty)
 SELECT 1, Product, Qty FROM Cart;
 
+--test it
+SELECT * FROM OrderDetails
+
 -- Clear Cart after checkout
 DELETE FROM Cart;
 
@@ -113,14 +116,18 @@ SELECT * FROM OrderDetails;
 --Printing Orders
 
 -- Print a Single Order
-SELECT O.OrderID, U.name AS UserName, O.Orderdate, PM.name AS ProductName, OD.Qty
+SELECT O.orderid, U.name AS UserName, O.orderdate, PM.name AS ProductName, OD.Qty
 FROM OrderHeader AS O
-INNER JOIN Users AS U ON O.User = U.id
-INNER JOIN OrderDetails AS OD ON O.OrderID = OD.OrderHeader
-INNER JOIN ProductsMenu AS PM ON OD.ProdID = PM.id
-WHERE O.OrderID = 1;
+JOIN Users AS U ON O.User = U.id
+JOIN OrderDetails AS OD ON O.orderid = OD.orderHeader
+JOIN ProductsMenu AS PM ON OD.prodid = PM.id
+WHERE O.Orderid = 1;
 
-
+SELECT * FROM ProductsMenu
+SELECT * FROM Users
+SELECT * FROM Cart
+SELECT * FROM OrderHeader
+SELECT * FROM OrderDetails
 -- Print All Orders for a Day's Shopping
 SELECT O.OrderID, U.name AS UserName, O.Orderdate, PM.name AS ProductName, OD.Qty
 FROM OrderHeader AS O
