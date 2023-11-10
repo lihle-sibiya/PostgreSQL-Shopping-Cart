@@ -92,8 +92,11 @@ SELECT * FROM Cart;
 
 --Checking Out (Creating Multiple Orders):
 -- Checkout (Create Order)
-INSERT INTO OrderHeader (User, Orderdate)
+INSERT INTO OrderHeader ("User", orderdate)
 VALUES (1, '2023-04-15 15:30:00');
+
+--test it
+SELECT * FROM OrderHeader
 
 -- Copy Cart to OrderDetails
 INSERT INTO OrderDetails (OrderHeader, ProdID, Qty)
