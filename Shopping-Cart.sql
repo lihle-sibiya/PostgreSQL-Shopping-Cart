@@ -46,10 +46,12 @@ SELECT * FROM OrderDetails
 INSERT INTO Cart (Product, Qty) VALUES (1, 1);
 
 -- Add a Coke (if product exists, update qty by 1)
-INSERT INTO Cart (Product, Qty)
-    ON CONFLICT (Product)
-    DO UPDATE SET Qty = Cart.Qty + 1
-    WHERE Cart.Product = 1;
+IF EXISTS (SELECT * FROM Cart WHERE Product = 1)
+    THEN
+        UPDATE Cart SET Qty = Qty + 1 WHERE Product = 1;
+    ELSE
+        INSERT INTO Cart (Product, Qty) VALUES (1, 1);
+    END IF;
 
 -- Add Chips to the Cart
 INSERT INTO Cart (Product, Qty) VALUES (2, 1);
