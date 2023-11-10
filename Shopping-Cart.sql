@@ -67,7 +67,6 @@ END IF;
 
 --Deleting Products from the Cart:
 
--- Delete Chips from the Cart
 -- Subtract one from the quantity if it's more than 1
 UPDATE Cart SET Qty = Qty - 1 WHERE Product = 1 AND Qty > 1;
 
