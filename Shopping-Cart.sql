@@ -43,7 +43,7 @@ SELECT * FROM OrderDetails
 --Adding Products to the Cart usign INSERT INTO
 
 -- Add Coke to the Cart
-INSERT INTO Cart (Product, Qty) VALUES (1, 1);
+INSERT INTO Cart (Product, Qty) VALUES (1, 2);
 
 -- Add a Coke (if product exists, update qty by 1)
 IF EXISTS (SELECT * FROM Cart WHERE Product = 1)
@@ -76,8 +76,8 @@ DELETE FROM Cart WHERE Product = 1 AND Qty = 1;
 
 --Checking Out (Creating Multiple Orders):
 -- Checkout (Create Order)
-INSERT INTO OrderHeader (OrderID, User, Orderdate)
-VALUES (1, 1, '2023-04-15 15:30:00');
+INSERT INTO OrderHeader (User, Orderdate)
+VALUES (1, '2023-04-15 15:30:00');
 
 -- Copy Cart to OrderDetails
 INSERT INTO OrderDetails (OrderHeader, ProdID, Qty)
