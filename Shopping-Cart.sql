@@ -40,13 +40,20 @@ SELECT * FROM Cart
 SELECT * FROM OrderHeader
 SELECT * FROM OrderDetails
 
+-- Inserting products into ProductsMenu
+INSERT INTO ProductsMenu ("name", price) VALUES ('Coke', 10);
+INSERT INTO ProductsMenu ("name", price) VALUES ('Chips', 5);
+
+--test it
+SELECT * FROM ProductsMenu
+
+
 --Adding Products to the Cart usign INSERT INTO
+
+-- Adding Products to the Cart using INSERT INTO
 
 -- Add Coke to the Cart
 INSERT INTO Cart (Product, Qty) VALUES (1, 2);
-
---test it
-SELECT * FROM Cart;
 
 -- Add a Coke (if product exists, update qty by 1)
 DO $$ 
@@ -62,9 +69,6 @@ END $$;
 -- Add Chips to the Cart
 INSERT INTO Cart (Product, Qty) VALUES (2, 1);
 
---test it
-SELECT * FROM Cart;
-
 -- Add another Coke (update quantity)
 DO $$ 
 BEGIN
@@ -75,6 +79,30 @@ BEGIN
         INSERT INTO Cart (Product, Qty) VALUES (1, 1);
     END IF;
 END $$;
+
+-- Deleting Products from the Cart:
+
+-- Subtract one from the quantity if it's more than 1
+UPDATE Cart SET Qty = Qty - 1 WHERE Product = 1 AND Qty > 1;
+
+-- Remove the whole item if the quantity is 1
+DELETE FROM Cart WHERE Product = 1 AND Qty = 1;
+
+-- Checking Out (Creating Multiple Orders):
+-- Checkout (Create Order)
+INSERT INTO OrderHeader ("User", orderdate)
+VALUES (1, '2023-04-15 15:30:00');
+
+-- Copy Cart to OrderDetails
+INSERT INTO OrderDetails (OrderHeader, ProdID, Qty)
+SELECT 1, Product, Qty FROM Cart;
+
+-- Clear Cart after checkout
+DELETE FROM Cart;
+
+-- Test it
+SELECT * FROM OrderHeader;
+SELECT * FROM OrderDetails;
 
 --test it
 SELECT * FROM Cart
