@@ -15,21 +15,21 @@ CREATE TABLE Users (
 
 -- Cart Table
 CREATE TABLE Cart (
-    Product bigserial,
+    Product bigserial REFERENCES ProductsMenu(id),
     Qty integer
 );
 
 -- OrderHeader Table
 CREATE TABLE OrderHeader (
     OrderID bigserial PRIMARY KEY,
-    "User" integer,
+    "User" integer REFERENCES Users(id),
     Orderdate TIMESTAMP
 );
 
 -- OrderDetails Table
 CREATE TABLE OrderDetails (
-    OrderHeader bigserial,
-    ProdID integer,
+    OrderHeader bigserial REFERENCES OrderHeader(OrderID),
+    ProdID integer REFERENCES ProductsMenu(id),
     Qty integer
 );
 
@@ -45,25 +45,39 @@ SELECT * FROM OrderDetails
 -- Add Coke to the Cart
 INSERT INTO Cart (Product, Qty) VALUES (1, 2);
 
+--test it
+SELECT * FROM Cart;
+
 -- Add a Coke (if product exists, update qty by 1)
-IF EXISTS (SELECT * FROM Cart WHERE Product = 1)
-    THEN
+DO $$ 
+BEGIN
+    -- Add a Coke (if product exists, update qty by 1; otherwise, insert with qty 1)
+    IF EXISTS (SELECT * FROM Cart WHERE Product = 1) THEN
         UPDATE Cart SET Qty = Qty + 1 WHERE Product = 1;
     ELSE
         INSERT INTO Cart (Product, Qty) VALUES (1, 1);
     END IF;
+END $$;
 
 -- Add Chips to the Cart
 INSERT INTO Cart (Product, Qty) VALUES (2, 1);
 
--- Add another Coke (update quantity)
-IF EXISTS (SELECT * FROM Cart WHERE Product = 1)
-THEN
-    UPDATE Cart SET Qty = Qty + 1 WHERE Product = 1;
-ELSE
-    INSERT INTO Cart (Product, Qty) VALUES (1, 1);
-END IF;
+--test it
+SELECT * FROM Cart;
 
+-- Add another Coke (update quantity)
+DO $$ 
+BEGIN
+    -- Add another Coke (if product exists, update qty by 1; otherwise, insert with qty 1)
+    IF EXISTS (SELECT * FROM Cart WHERE Product = 1) THEN
+        UPDATE Cart SET Qty = Qty + 1 WHERE Product = 1;
+    ELSE
+        INSERT INTO Cart (Product, Qty) VALUES (1, 1);
+    END IF;
+END $$;
+
+--test it
+SELECT * FROM Cart
 
 --Deleting Products from the Cart:
 
@@ -73,6 +87,8 @@ UPDATE Cart SET Qty = Qty - 1 WHERE Product = 1 AND Qty > 1;
 -- Remove the whole item if the quantity is 1
 DELETE FROM Cart WHERE Product = 1 AND Qty = 1;
 
+--test it
+SELECT * FROM Cart;
 
 --Checking Out (Creating Multiple Orders):
 -- Checkout (Create Order)
@@ -86,6 +102,10 @@ SELECT 1, Product, Qty FROM Cart;
 -- Clear Cart after checkout
 DELETE FROM Cart;
 
+
+--Test it
+SELECT * FROM OrderHeader;
+SELECT * FROM OrderDetails;
 
 --Printing Orders
 
