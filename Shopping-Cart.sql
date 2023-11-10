@@ -47,6 +47,11 @@ INSERT INTO ProductsMenu ("name", price) VALUES ('Chips', 5);
 --test it
 SELECT * FROM ProductsMenu
 
+-- Inserting users into Users
+INSERT INTO Users (name) VALUES ('Arnold');
+INSERT INTO Users (name) VALUES ('Sheryl');
+
+SELECT * FROM Users
 
 --Adding Products to the Cart usign INSERT INTO
 
