@@ -215,3 +215,18 @@ SELECT * FROM Cart;
 
 --Bonus
 --Function: remove an item
+CREATE OR REPLACE FUNCTION remove_item(product_id INTEGER, quantity INTEGER)
+RETURNS VOID AS $$
+BEGIN
+    -- Subtract the specified quantity from the cart
+    UPDATE Cart SET Qty = Qty - quantity WHERE Product = product_id AND Qty > quantity;
+    -- Remove the whole item if the quantity is 1
+    DELETE FROM Cart WHERE Product = product_id AND Qty = 1;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Test it: Remove 1 unit of product with ID 2 (chips) from the cart
+SELECT add_item(1, 3);
+
+--Test Table
+SELECT * FROM Cart;
