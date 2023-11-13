@@ -87,15 +87,17 @@ BEGIN
     END IF;
 END $$;
 
--- Deleting Products from the Cart:
+-- 4) Remove an item from the cart:
 
 -- If the quantity is more than one - subtract one from it
+-- Subtract Coke
 UPDATE Cart SET Qty = Qty - 1 WHERE Product = 1 AND Qty > 1;
 
 --test it
 SELECT * FROM Cart
 
 -- Remove the whole item if the quantity is 1
+--Remove coke
 DELETE FROM Cart WHERE Product = 1 AND Qty = 1;
 
 --test it
@@ -142,7 +144,7 @@ SELECT * FROM OrderHeader
 
 --Again another user
 INSERT INTO OrderHeader ("User", orderdate)
-VALUES (2, '2023-04-15 15:30:00');
+VALUES (2, '2023-04-15 16:00:00');
 
 --test it
 SELECT * FROM OrderHeader
@@ -150,7 +152,7 @@ SELECT * FROM OrderHeader
 --B - user the above order ID to insert the cart contents into the order details table
 -- Copy Cart to OrderDetails
 INSERT INTO OrderDetails (OrderHeader, ProdID, Qty)
-SELECT 1, Product, Qty FROM Cart;
+SELECT currval(pg_get_serial_sequence('orderheader', 'orderid')), Product, Qty FROM Cart;
 
 --test it
 SELECT * FROM OrderDetails
@@ -167,7 +169,7 @@ SELECT * FROM OrderDetails;
 
 --Printing Orders
 
--- Print a Single Order
+-- Printing a single order (SELECT STATEMENT)
 SELECT O.orderid, U.name AS UserName, O.orderdate, PM.name AS ProductName, OD.Qty
 FROM OrderHeader AS O
 INNER JOIN Users AS U ON O."User" = U.id
@@ -181,7 +183,7 @@ SELECT * FROM Cart
 SELECT * FROM OrderHeader
 SELECT * FROM OrderDetails
 
--- Print All Orders for a Day's Shopping
+-- Printing all orders for a days shopping (SELECT STATEMENT)
 SELECT O.OrderID, U.name AS UserName, O.Orderdate, PM.name AS ProductName, OD.Qty
 FROM OrderHeader AS O
 INNER JOIN Users AS U ON O."User" = U.id
