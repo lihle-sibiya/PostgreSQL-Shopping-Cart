@@ -1,4 +1,4 @@
---Create tables
+--1. Create tables
 
 -- Products Menu Table
 CREATE TABLE ProductsMenu (
