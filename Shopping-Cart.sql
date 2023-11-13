@@ -60,11 +60,13 @@ SELECT * FROM Users
 -- Add Coke to the Cart
 INSERT INTO Cart (Product, Qty) VALUES (1, 2);
 
--- Add a Coke (if product exists, update qty by 1)
+--test it
+SELECT * FROM Cart
+
+-- Add a Coke (if product exists, update qty by 1; otherwise, insert with qty 1)
 DO $$ 
 BEGIN
-    -- Add a Coke (if product exists, update qty by 1; otherwise, insert with qty 1)
-    IF EXISTS (SELECT * FROM Cart WHERE Product = 1) THEN
+      IF EXISTS (SELECT * FROM Cart WHERE Product = 1) THEN
         UPDATE Cart SET Qty = Qty + 1 WHERE Product = 1;
     ELSE
         INSERT INTO Cart (Product, Qty) VALUES (1, 1);
@@ -131,7 +133,7 @@ DELETE FROM Cart WHERE Product = 1 AND Qty = 1;
 SELECT * FROM Cart;
 
 --5) Checkout to place the order
--- A - insert into the order header table (userid (1 or a 2) , dae and time
+-- A - insert into the order header table (userid (1 or a 2) , date and time
 INSERT INTO OrderHeader ("User", orderdate)
 VALUES (1, '2023-04-15 15:30:00');
 
