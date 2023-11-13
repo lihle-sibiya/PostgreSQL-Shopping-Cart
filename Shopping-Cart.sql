@@ -190,3 +190,28 @@ INNER JOIN Users AS U ON O."User" = U.id
 INNER JOIN OrderDetails AS OD ON O.OrderID = OD.OrderHeader
 INNER JOIN ProductsMenu AS PM ON OD.ProdID = PM.id
 WHERE DATE(O.Orderdate) = '2023-04-15';
+
+--Bonus
+--Function: Add an item
+CREATE OR REPLACE FUNCTION add_item(product_id INTEGER, quantity INTEGER)
+RETURNS VOID AS $$
+BEGIN
+    -- Check if the product is already in the cart
+    IF EXISTS (SELECT 1 FROM Cart WHERE Product = product_id) THEN
+        -- Update the quantity if the product is already in the cart
+        UPDATE Cart SET Qty = Qty + quantity WHERE Product = product_id;
+    ELSE
+        -- Insert the product into the cart if it doesn't exist
+        INSERT INTO Cart (Product, Qty) VALUES (product_id, quantity);
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Test it: Add 2 units of product with ID 1 (coke) to the cart
+SELECT add_item(1, 3);
+
+--Test Table
+SELECT * FROM Cart;
+
+--Bonus
+--Function: remove an item
