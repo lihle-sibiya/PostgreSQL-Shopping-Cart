@@ -40,6 +40,8 @@ SELECT * FROM Cart
 SELECT * FROM OrderHeader
 SELECT * FROM OrderDetails
 
+--3) Add an item to the cart:
+
 -- Inserting products into ProductsMenu
 INSERT INTO ProductsMenu ("name", price) VALUES ('Coke', 10);
 INSERT INTO ProductsMenu ("name", price) VALUES ('Chips', 5);
@@ -52,8 +54,6 @@ INSERT INTO Users (name) VALUES ('Arnold');
 INSERT INTO Users (name) VALUES ('Sheryl');
 
 SELECT * FROM Users
-
---Adding Products to the Cart usign INSERT INTO
 
 -- Adding Products to the Cart using INSERT INTO
 
@@ -112,7 +112,7 @@ SELECT * FROM OrderDetails;
 --test it
 SELECT * FROM Cart
 
---Deleting Products from the Cart:
+--4) Remove an item from the cart:
 
 -- Subtract one from the quantity if it's more than 1
 UPDATE Cart SET Qty = Qty - 1 WHERE Product = 1 AND Qty > 1;
@@ -123,14 +123,15 @@ DELETE FROM Cart WHERE Product = 1 AND Qty = 1;
 --test it
 SELECT * FROM Cart;
 
---Checking Out (Creating Multiple Orders):
--- Checkout (Create Order)
+--5) Checkout to place the order
+-- A - insert into the order header table (userid (1 or a 2) , dae and time
 INSERT INTO OrderHeader ("User", orderdate)
 VALUES (1, '2023-04-15 15:30:00');
 
 --test it
 SELECT * FROM OrderHeader
 
+--B - user the above order ID to insert the cart contents into the order details table
 -- Copy Cart to OrderDetails
 INSERT INTO OrderDetails (OrderHeader, ProdID, Qty)
 SELECT 1, Product, Qty FROM Cart;
@@ -138,7 +139,7 @@ SELECT 1, Product, Qty FROM Cart;
 --test it
 SELECT * FROM OrderDetails
 
--- Clear Cart after checkout
+-- B...delete the cart contents
 DELETE FROM Cart;
 
 
