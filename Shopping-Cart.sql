@@ -207,8 +207,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Test it: Add 2 units of product with ID 1 (coke) to the cart
-SELECT add_item(1, 3);
+-- Call the function: Add 2 units of product with ID 1 (coke) to the cart
+SELECT add_item(1, 2);
 
 --Test Table
 SELECT * FROM Cart;
@@ -225,8 +225,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Test it: Remove 1 unit of product with ID 2 (chips) from the cart
-SELECT add_item(1, 3);
+-- Call the function: Remove 1 unit of product with ID 2 (chips) from the cart
+SELECT remove_item(2, 1);
 
 --Test Table
 SELECT * FROM Cart;
