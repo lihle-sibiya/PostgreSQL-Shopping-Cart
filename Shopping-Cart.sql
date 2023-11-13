@@ -90,8 +90,14 @@ END $$;
 -- If the quantity is more than one - subtract one from it
 UPDATE Cart SET Qty = Qty - 1 WHERE Product = 1 AND Qty > 1;
 
+--test it
+SELECT * FROM Cart
+
 -- Remove the whole item if the quantity is 1
 DELETE FROM Cart WHERE Product = 1 AND Qty = 1;
+
+--test it
+SELECT * FROM Cart
 
 -- Checking Out (Creating Multiple Orders):
 -- Checkout (Create Order)
