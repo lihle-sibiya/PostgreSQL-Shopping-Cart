@@ -99,12 +99,13 @@ DELETE FROM Cart WHERE Product = 1 AND Qty = 1;
 --test it
 SELECT * FROM Cart
 
--- Checking Out (Creating Multiple Orders):
--- Checkout (Create Order)
+-- 5) Checkout to place the order
+-- A - insert into the order header table (userid (1 or a 2) , dae and time)
 INSERT INTO OrderHeader ("User", orderdate)
 VALUES (1, '2023-04-15 15:30:00');
 
 -- Copy Cart to OrderDetails
+--B - user the above order ID to insert the cart contents into the order details table
 INSERT INTO OrderDetails (OrderHeader, ProdID, Qty)
 SELECT 1, Product, Qty FROM Cart;
 
