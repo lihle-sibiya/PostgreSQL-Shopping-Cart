@@ -76,14 +76,14 @@ END $$;
 -- Add Chips to the Cart
 INSERT INTO Cart (Product, Qty) VALUES (2, 1);
 
--- Add another Coke (update quantity)
+-- Add another Chips (update quantity)
 DO $$ 
 BEGIN
-    -- Add another Coke (if product exists, update qty by 1; otherwise, insert with qty 1)
-    IF EXISTS (SELECT * FROM Cart WHERE Product = 1) THEN
-        UPDATE Cart SET Qty = Qty + 1 WHERE Product = 1;
+    -- Add another Chips (if product exists, update qty by 1; otherwise, insert with qty 1)
+    IF EXISTS (SELECT * FROM Cart WHERE Product = 2) THEN
+        UPDATE Cart SET Qty = Qty + 1 WHERE Product = 2;
     ELSE
-        INSERT INTO Cart (Product, Qty) VALUES (1, 1);
+        INSERT INTO Cart (Product, Qty) VALUES (2, 1);
     END IF;
 END $$;
 
@@ -140,6 +140,13 @@ VALUES (1, '2023-04-15 15:30:00');
 --test it
 SELECT * FROM OrderHeader
 
+--Again another user
+INSERT INTO OrderHeader ("User", orderdate)
+VALUES (2, '2023-04-15 15:30:00');
+
+--test it
+SELECT * FROM OrderHeader
+
 --B - user the above order ID to insert the cart contents into the order details table
 -- Copy Cart to OrderDetails
 INSERT INTO OrderDetails (OrderHeader, ProdID, Qty)
@@ -147,6 +154,8 @@ SELECT 1, Product, Qty FROM Cart;
 
 --test it
 SELECT * FROM OrderDetails
+
+
 
 -- B...delete the cart contents
 DELETE FROM Cart;
