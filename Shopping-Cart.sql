@@ -87,7 +87,7 @@ END $$;
 
 -- Deleting Products from the Cart:
 
--- Subtract one from the quantity if it's more than 1
+-- If the quantity is more than one - subtract one from it
 UPDATE Cart SET Qty = Qty - 1 WHERE Product = 1 AND Qty > 1;
 
 -- Remove the whole item if the quantity is 1
@@ -152,9 +152,9 @@ SELECT * FROM OrderDetails;
 -- Print a Single Order
 SELECT O.orderid, U.name AS UserName, O.orderdate, PM.name AS ProductName, OD.Qty
 FROM OrderHeader AS O
-JOIN Users AS U ON O."User" = U.id
-JOIN OrderDetails AS OD ON O.orderid = OD.orderHeader
-JOIN ProductsMenu AS PM ON OD.prodid = PM.id
+INNER JOIN Users AS U ON O."User" = U.id
+INNER JOIN OrderDetails AS OD ON O.orderid = OD.orderHeader
+INNER JOIN ProductsMenu AS PM ON OD.prodid = PM.id
 WHERE O.Orderid = 1;
 
 SELECT * FROM ProductsMenu
